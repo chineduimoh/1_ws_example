@@ -41,6 +41,7 @@ func ws(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", ws)
+	fmt.Println("Server started")
 	if err := http.ListenAndServe(":9000", nil); err != nil {
 		log.Fatal(err)
 	}
