@@ -11,6 +11,7 @@ import (
 var connCount int = 0
 
 func ws(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("i got here")
 	// Upgrade connection
 	connCount++
 	if connCount%100 == 0 {
