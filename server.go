@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/websocket"
 )
@@ -43,7 +44,7 @@ func ws(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/", ws)
 	fmt.Println("Server started")
-	if err := http.ListenAndServe("0.0.0.0:8080", nil); err != nil {
+	if err := http.ListenAndServe(":" + os.Getenv("PORT"), nil); err != nil {
 		log.Fatal(err)
 	}
 }
