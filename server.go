@@ -42,7 +42,7 @@ func ws(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/", ws)
 	fmt.Println("Server started")
-	if err := http.ListenAndServe("0.0.0.0", nil); err != nil {
+	if err := http.ListenAndServe("0.0.0.0:8080", nil); err != nil {
 		log.Fatal(err)
 	}
 }
