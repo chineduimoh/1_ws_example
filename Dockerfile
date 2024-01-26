@@ -8,7 +8,7 @@ WORKDIR /server
 COPY . .
 
 # Build the Go application
-RUN GOOS=linux GOARCH=amd64 go build --tags "static netgo" -o server .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo -ldflags '-w' -o server .
 
 # Expose a port if your application listens on a specific port
 EXPOSE 9000
