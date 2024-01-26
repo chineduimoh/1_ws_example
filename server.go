@@ -40,35 +40,9 @@ func ws(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	// // Set Ulimit
-	// var rlimit syscall.Rlimit
-
-	// if err := syscall.Getrlimit(syscall.RLIMIT_NOFILE, &rlimit); err != nil {
-	// 	fmt.Println(err)
-	// }
-
-	// rlimit.Cur = rlimit.Max
-	// if err := syscall.Setrlimit(syscall.RLIMIT_NOFILE, &rlimit); err != nil {
-	// 	fmt.Println(err)
-	// }
-	// fmt.Println("Ulimit set to maximum", rlimit.Max)
-
-	server := &http.Server{
-		// Other configurations...
-		Addr: ":9000",
-	}
-
-	// Set a custom ErrorLog
-	server.ErrorLog = log.New(os.Stdout, "custom error: ", log.LstdFlags)
-
 	http.HandleFunc("/", ws)
-
-	// Start the server
-	if err := server.ListenAndServe(); err != nil {
+	fmt.Println("Server started")
+	if err := http.ListenAndServe(":" + os.Getenv("PORT"), nil); err != nil {
 		log.Fatal(err)
 	}
-
-	// if err := http.ListenAndServe(":9000", nil); err != nil {
-	// 	log.Fatal(err)
-	// }
 }
