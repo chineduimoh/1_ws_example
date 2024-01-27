@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+		"syscall"
 
 	"github.com/gorilla/websocket"
 )
@@ -40,6 +41,19 @@ func ws(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+		// Set Ulimit
+	var rlimit syscall.Rlimit
+
+	if err := syscall.Getrlimit(syscall.RLIMIT_NOFILE, &rlimit); err != nil {
+		fmt.Println(err)
+	}
+
+	rlimit.Cur = rlimit.Max
+	if err := syscall.Setrlimit(syscall.RLIMIT_NOFILE, &rlimit); err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Ulimit set to maximum")
+	
 	http.HandleFunc("/", ws)
 	fmt.Println("Server started & listening on port: ", os.Getenv("PORT"))
 	if err := http.ListenAndServe(":" + os.Getenv("PORT"), nil); err != nil {
