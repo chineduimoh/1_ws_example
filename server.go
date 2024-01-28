@@ -41,6 +41,7 @@ func ws(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", ws)
+	
 	fmt.Println("Server started & listening on port: ", os.Getenv("PORT"))
 	if err := http.ListenAndServe(":" + os.Getenv("PORT"), nil); err != nil {
 		log.Fatal(err)
